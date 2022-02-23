@@ -1,0 +1,29 @@
+hostname R2
+
+no ip domain-lookup
+
+int f0/0
+ip address 192.168.0.2 255.255.255.252
+description connection with r1
+no sh
+
+int f1/0
+ip address 192.168.0.5 255.255.255.252
+description connection with r3
+no sh
+
+int f1/0.20
+encapsulation dot1Q 20 
+ip address  172.22.149.174 255.255.255.240
+no shut 
+
+int f1/0.30
+encapsulation dot1Q 30 
+ip address 172.22.149.158 255.255.255.224
+no shut 
+
+exit
+
+ip route 172.22.149.176 255.255.255.248 192.168.0.6
+ip route 172.22.148.0 255.255.254.0 192.168.0.1
+ip route 172.22.149.0 255.255.255.128 192.168.0.1

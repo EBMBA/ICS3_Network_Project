@@ -1,0 +1,29 @@
+hostname r1sw1
+
+no ip domain-lookup
+
+vlan 40
+name Professeurs
+
+vlan 50
+name Etudiants
+
+int f0/1
+switchport mode trunk 
+switchport trunk allowed vlan 40,50
+no sh
+
+int f0/2
+switchport mode trunk 
+switchport trunk allowed vlan 40,50
+no sh
+
+int f0/3
+switchport mode access
+switchport access vlan 50
+no sh
+
+int f0/4
+switchport mode access
+switchport access vlan 40
+no sh

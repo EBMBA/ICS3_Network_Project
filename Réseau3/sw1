@@ -1,3 +1,7 @@
+enable
+
+conf t
+
 hostname r3sw1
 
 no ip domain-lookup
@@ -6,8 +10,8 @@ vlan 10
 name Supervision
 
 int f0/1
-switchport mode access
-switchport access vlan 10
+switchport mode trunk
+switchport trunk vlan allowed 10
 no sh
 
 int f0/2

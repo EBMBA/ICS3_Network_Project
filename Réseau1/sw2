@@ -1,3 +1,7 @@
+enable
+
+conf t
+
 hostname r1sw2
 
 no ip domain-lookup

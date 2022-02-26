@@ -1,3 +1,7 @@
+enable
+
+conf t
+
 hostname R2
 
 no ip domain-lookup
@@ -12,18 +16,56 @@ ip address 192.168.0.5 255.255.255.252
 description connection with r3
 no sh
 
-int f1/0.20
+int f2/0.20
 encapsulation dot1Q 20 
 ip address  172.22.150.174 255.255.255.240
 no shut 
 
-int f1/0.30
+int f2/0.30
 encapsulation dot1Q 30 
 ip address 172.22.150.158 255.255.255.224
 no shut 
 
+int f2/0
+no sh
+
 exit
 
-ip route 172.22.150.176 255.255.255.248 192.168.0.6
 ip route 172.22.148.0 255.255.254.0 192.168.0.1
+ip route 172.22.150.176 255.255.255.248 192.168.0.6
 ip route 172.22.150.0 255.255.255.128 192.168.0.1
+
+ip dhcp pool Administration
+network 172.22.150.128 255.255.255.224
+default-router 172.22.150.158 
+dns-server 172.22.150.161
+exit
+
+ip dhcp excluded-address 172.22.150.158
+
+access-list 1 permit 172.22.150.160 0.0.0.15
+access-list 1 permit 172.22.150.128 0.0.0.31
+
+access-list 101 permit icmp any any
+
+int f0/0
+ip nat outside
+ip nat inside source list 1 int f0/0 overload
+
+int f0/0
+ip access-group 101 in
+
+int f1/0
+ip nat outside
+ip nat inside source list 1 int f1/0 overload 
+
+int f1/0
+ip access-group 101 in
+
+int f2/0.20
+ip nat inside
+ip access-group 101 out
+
+int f2/0.30
+ip nat inside
+ip access-group 101 out

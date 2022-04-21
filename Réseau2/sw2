@@ -13,13 +13,12 @@ vlan 30
 name Administration
 
 int f0/1
-switchport mode trunk 
-switchport trunk allowed vlan 20,30
+switchport mode acces 
+switchport access vlan 30
 no sh
 
 int f0/2
 switchport mode trunk 
-switchport trunk allowed vlan 20,30
 no sh
 
 int f0/3
@@ -30,4 +29,9 @@ no sh
 int f0/4
 switchport mode access
 switchport access vlan 30
+no sh
+
+int f0/5
+switchport mode access
+switchport access vlan 20
 no sh

@@ -6,19 +6,20 @@ hostname R3
 
 no ip domain-lookup
 
-int f0/0
-ip address 192.168.0.10 255.255.255.252
+int se0/0
+ip address 172.22.150.194 255.255.255.252
 description connection with r1
 no sh
 
-int f1/0
-ip address 192.168.0.6 255.255.255.252
+int se1/0
+ip address 172.22.150.190 255.255.255.252
 description connection with r2
 no sh
 
 int f2/0.10
 encapsulation dot1Q 10
 ip address 172.22.150.182 255.255.255.248
+ip helper-address 172.22.150.163
 no shut 
 
 int f2/0
@@ -26,29 +27,7 @@ no sh
 
 exit
 
-ip route 172.22.148.0 255.255.254.0 192.168.0.9
-ip route 172.22.150.0 255.255.255.128 192.168.0.9
-ip route 172.22.150.128 255.255.255.224 192.168.0.5 
-ip route 172.22.150.160 255.255.255.240 192.168.0.5
-
-ip dhcp pool Supervision
-network 172.22.150.176 255.255.255.248
-default-router 172.22.150.182
-dns-server 172.22.150.161
-exit
-
-ip dhcp excluded-address 172.22.150.182
-
-access-list 1 permit 172.22.150.176 0.0.0.7 
-
-int f0/0
-ip nat outside
-ip nat inside source list 1 int f0/0 overload
-
-int f1/0
-ip nat outside
-ip nat inside source list 1 int f1/0 overload
-
-int f2/0.10
-ip nat inside
-
+ip route 172.22.148.0 255.255.254.0 172.22.150.193
+ip route 172.22.150.0 255.255.255.128 172.22.150.193
+ip route 172.22.150.128 255.255.255.224 172.22.150.189 
+ip route 172.22.150.160 255.255.255.240 172.22.150.189

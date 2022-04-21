@@ -6,24 +6,26 @@ hostname R1
 
 no ip domain-lookup
 
-int f0/0
-ip address 192.168.0.1 255.255.255.252
+int se0/0
+ip address 172.22.150.185 255.255.255.252
 description connection with r2
 no sh
 
-int f1/0
-ip address 192.168.0.9 255.255.255.252
+int se1/0
+ip address 172.22.150.193 255.255.255.252
 description connection with r3
 no sh
 
 int f2/0.40
 encapsulation dot1Q 40
 ip address 172.22.150.126 255.255.255.128
+ip helper-address 172.22.150.163
 no shut 
 
 int f2/0.50
 encapsulation dot1Q 50
 ip address 172.22.149.254 255.255.254.0
+ip helper-address 172.22.150.163
 no shut 
 
 int f2/0
@@ -31,38 +33,6 @@ no sh
 
 exit
 
-ip route 172.22.150.176 255.255.255.248 192.168.0.10
-ip route 172.22.150.160 255.255.255.240 192.168.0.2
-ip route 172.22.150.128 255.255.255.224 192.168.0.2 
-
-ip dhcp pool Professeurs
-network 172.22.150.0 255.255.255.128
-default-router 172.22.150.126 
-dns-server 172.22.150.161
-exit
-
-ip dhcp pool Etudiants
-network 172.22.148.0 255.255.254.0
-default-router 172.22.149.254 
-dns-server 172.22.150.161
-exit
-
-ip dhcp excluded-address 172.22.149.254
-ip dhcp excluded-address 172.22.150.126
-
-access-list 1 permit 172.22.148.0 0.0.1.255
-access-list 1 permit 172.22.150.0 0.0.0.127
-
-int f0/0
-ip nat outside
-ip nat inside source list 1 int f0/0 overload
-
-int f1/0
-ip nat outside
-ip nat inside source list 1 int f1/0 overload
-
-int f2/0.40
-ip nat inside
-
-int f2/0.50
-ip nat inside
+ip route 172.22.150.176 255.255.255.248 172.22.150.193
+ip route 172.22.150.160 255.255.255.240 172.22.150.186 
+ip route 172.22.150.128 255.255.255.224 172.22.150.186

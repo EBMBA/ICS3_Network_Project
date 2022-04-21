@@ -1,0 +1,24 @@
+enable
+
+conf t
+
+hostname R4
+
+no ip domain-lookup
+
+int se2/0
+ip address 1.1.1.1 255.255.255.252
+ip nat outside
+description connection with r2
+no sh
+
+int f0/0
+ip address 192.168.0.1 255.255.255.252
+ip nat inside
+no shut 
+
+ip route 0.0.0.0 0.0.0.0 1.1.1.2
+
+access-list 1 permit 192.168.0.0 0.0.0.255
+
+ip nat inside source list 1 interface se2/0 overload

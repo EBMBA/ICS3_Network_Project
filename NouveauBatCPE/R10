@@ -1,0 +1,45 @@
+enable
+
+conf t
+
+hostname R10
+
+no ip domain-lookup
+
+int se2/0
+ip address 172.24.148.18 255.255.255.252
+description connection with R7
+no sh
+
+int se3/0
+ip address 172.24.148.22 255.255.255.252
+description connection with R8
+no sh
+
+int se6/0
+ip address 192.168.254.1 255.255.255.252
+description connection with R11
+no sh
+
+int se7/0
+ip address 192.168.254.5 255.255.255.252
+description connection with R12
+no sh
+
+router ospf 1
+router-id 6.6.6.6
+network 172.24.148.20 0.0.0.3 area 0
+network 172.24.148.16 0.0.0.3 area 0
+
+router rip 
+version 2
+no auto-summary
+network 192.168.254.0
+network 192.168.254.4
+
+router rip
+redistribute ospf 1 metric 3
+
+router ospf 1
+redistribute rip metric 50 metric-type 1 subnets
+

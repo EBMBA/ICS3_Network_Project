@@ -1,0 +1,28 @@
+enable
+
+conf t
+
+hostname R12
+
+no ip domain-lookup
+
+int se2/0
+ip address 192.168.254.6 255.255.255.252
+description connection with R10
+no sh
+
+int f0/0
+ip address 192.168.1.253 255.255.255.0
+description connection with swcpe2
+no sh
+
+
+int f0/0
+standby 1 ip 192.168.1.254
+standby 1 priority 91
+
+router rip 
+version 2
+no auto-summary
+network 192.168.1.0
+network 192.168.254.4

@@ -1,0 +1,22 @@
+enable
+
+conf t
+
+hostname R8
+
+no ip domain-lookup
+
+int se3/0
+ip address 172.24.148.21 255.255.255.252
+description connection with r10
+no sh
+
+int f0/0
+ip address 172.24.148.11 255.255.255.248
+description connection with swcpe1
+no sh
+
+router ospf 1
+router-id 4.4.4.4
+network 172.24.148.20 0.0.0.3 area 0
+network 172.24.148.8 0.0.0.7 area 0

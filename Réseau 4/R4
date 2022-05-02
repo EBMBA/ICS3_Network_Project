@@ -17,8 +17,17 @@ ip address 192.168.0.1 255.255.255.252
 ip nat inside
 no shut 
 
-ip route 0.0.0.0 0.0.0.0 1.1.1.2
+ip route 172.22.148.0 255.255.252.0 1.1.1.2
 
 access-list 1 permit 192.168.0.0 0.0.0.255
 
 ip nat inside source list 1 interface se2/0 overload
+
+int se3/0
+ip address 1.1.1.5 255.255.255.252
+description connection with r5
+no sh
+
+router bgp 22
+neighbor 1.1.1.6 remote-as 24
+network 172.22.148.0 mask 255.255.252.0

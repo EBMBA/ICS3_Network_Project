@@ -43,3 +43,5 @@ int f2/0
 ip nat inside
 
 ip nat inside source static tcp 172.22.150.162 80 1.1.1.2 80 
+
+ip route 0.0.0.0 0.0.0.0 1.1.1.1
